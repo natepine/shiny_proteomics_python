@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Exit on any non-zero exit status
+set -e
+
+if ! [ -f data/conf.yml ]; then
+    echo "
+_____________________________________
+App config not found, running genConf
+"
+
+    genConf
+fi
+
+migrateDB
+
+if ! [ -f data/annotations.db ]; then
+    echo "
+_____________________________________
+Annotation database not found, running annotations build
+"
+
+    annotations build
+fi
+
+mosaic-cmd validateBuild.r
+

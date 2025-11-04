@@ -1,0 +1,13 @@
+.box.box-solid.box-primary>.box-header {
+   background:#497EA5;
+}
+.box.box-solid.box-primary {
+   border-color:#497EA5;
+}
+.skin-blue .main-header .navbar,
+.skin-blue .main-header .logo {
+   background-color: #497EA5;
+}
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+   background-color: #222d32;
+}

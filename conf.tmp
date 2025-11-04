@@ -1,0 +1,63 @@
+##Copy this file to data/conf.yml in the docker volume
+
+SERVERS:
+#   MassPike servers and authentication
+#
+#   Each entry represents an available MassPike instance
+#   Replace `my.masspike.com` with your URL
+    my.masspike.com:
+#       Replace `admin` with a user on your masspike instance with permission to view all user's data
+#       Used to provide access to viewer link without authentication
+        User: admin #Required
+#       Replace `api_key` with an api key for the above User
+        Key: api_key #Required
+#       Replace `MassPike` with the UI name of this server
+        Label: MassPike #Optional [Defaults to server URL]
+#       Replace `true` with `false` to allow self-signed SSL certificates for this server
+        VerifySSL: true #Optional [Defaults to true]
+#
+#   .
+#   .
+#   .
+#
+#   last.server.com
+#       User:
+#       Key:
+#       Label:
+#       VerifySSL:
+
+#Optional viewer subdirectory for reverse proxied urls.
+#Otherwise '${APP_NAME}/IsoViewer' will be used in viewer links, using the ${APP_NAME} from `.env`
+#Note: If APP_NAME is empty ('') or not in the environment at runtime, 'shinyproteomics' will be used for viewer links.
+#VIEWER_SUBDIR: viewer_app #Optional [Defaults to 'shinyproteomics']
+
+#Allow users with this password to view all users' links and access the full 'Advanced' tab
+SUPER_USER_PASSWORD: secret_password #Optional [Defaults to full access to all users]
+
+#Define which species the user can select in the editor
+ANNOTATED_SPECIES: #Optional [Defaults to no annotation UI]
+#   Format is (Label: taxid)*
+#   Where Label is the UI name of the entry and taxid is the NCBI taxonomy id for annotation data
+    Human: 9606
+    Mouse: 10090
+    Other: .na # .na indicates no annotations
+
+#The app will look for a table in data/annotation.db named 'annnotations_*taxid*' for annotations. If nothing is found annotation enrichment tables are omitted.
+#   The table is expected to have columns UniprotID, Database, DatabaseID where DatabaseID is the id from Database which is one of
+#       GO <type>
+#           Molecular Function
+#           Cellular Component
+#           Biological Process
+#       KEGG <type>
+#           Pathway
+#           Disease
+#       Reactome
+#       Interpro
+
+#When loading a dataset the app will look in the data/idMaps dir within docker's volume for '*taxid*.rds' and
+#attempt to map any ids returned by MassPike to provided ids
+#   If final ids are not UniprotIDs, annotation enrichment and Uniprot links will not work
+#   The rds file is expected to contain a vector of UniprotIDs values, named with the corresponding MassPike ids.
+
+#Display contact information for server adminstrator
+ADMIN_EMAIL: tmt_admin@tmt_server.org #Optional [Defaults to no displayed contact for resolving issues]

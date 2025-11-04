@@ -1,0 +1,14 @@
+services:
+  app:
+    volumes:
+      - type: bind
+        source: ./src
+        target: /srv/shiny-server/tmtmosaic
+      - type: bind
+        source: ./tests
+        target: /srv/shiny-server/tmtmosaic/tests
+    entrypoint: /bin/bash
+    container_name: shiny-dev
+    stdin_open: true 
+    tty: true
+

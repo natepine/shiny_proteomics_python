@@ -1,0 +1,4 @@
+#!/bin/bash
+
+Rscript --vanilla $APP_DIR/tests/snapshot.r $*
+

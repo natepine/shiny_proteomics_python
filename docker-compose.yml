@@ -1,0 +1,23 @@
+name: tmtmosaic
+
+services:
+  app:
+    build:
+      context: .
+      target: tmtmosaic
+
+    image: tmtmosaic
+
+    ports:
+      - "${PORT:-3838}:3838"
+        # To change the default port, supply a .env file with:
+        # PORT=<your-host-port>
+
+    volumes:
+      - db_data:/srv/shiny-server/tmtmosaic/data/
+
+    restart: always
+
+volumes:
+  db_data: {}
+
