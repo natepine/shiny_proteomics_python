@@ -23,9 +23,7 @@ docker compose build
 
 ## Running the application
 
-```
-docker compose up -d
-```
+### Prerequisites
 
 The container listens on port `3838` by default (configurable via `.env`). Navigate to `http://localhost:3838/tmtmosaic/IsoBuilder` to build viewers or `http://localhost:3838/tmtmosaic/IsoParser?sessid=<viewer-key>` to open a saved viewer.
 
@@ -40,7 +38,7 @@ docker logs tmtmosaic-app-1
 The `.env` file can override runtime defaults:
 
 ```
-PORT=3838
+PORT=5000
 ```
 
 ## Development workflow
