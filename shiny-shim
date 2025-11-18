@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec s6-setuidgid shiny /opt/shiny-server/bin/shiny-server
