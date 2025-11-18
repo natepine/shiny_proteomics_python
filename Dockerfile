@@ -1,66 +1,26 @@
-FROM rocker/shiny:4.3.2 AS tmtmosaic
+FROM python:3.11-slim AS tmtmosaic
 
-## install packages
-# debian
-RUN set -x \
-    && apt-get update -qq \
-    && apt-get -y --no-install-recommends install \
-        libsqlite3-dev \
-        libglpk-dev \
-        libssl-dev \
-    && apt-get remove --purge --auto-remove -y \
-    && rm -rf /var/lib/apt/lists/*
-
-# R
-RUN install2.r --error --skipinstalled \
-#Shiny packages
-   #shiny \ already installed
-    shinydashboard \
-    shinyjs \
-    shinymanager \
-    shinyWidgets \
-#Plotting packages
-    ggdendro \
-    ggplot2 \
-    igraph \
-    plotly \
-    svglite \
-    visNetwork \
-#Color
-    RColorBrewer \
-    colourpicker \
-#Data formats
-    htmlwidgets \
-    jsonlite \
-    openxlsx \
-    rhandsontable \
-#Data manipulation
-    DT \
-    readr \
-    RSQLite \
-    stringr \
-    && rm -rf /tmp/downloaded_packages
-
-## configure Shiny base image
-RUN rm -rf /srv/shiny-server/* /bin/shiny-server
-COPY shiny-shim /bin/shiny-server
-COPY --chown=shiny:shiny shiny.conf /etc/shiny-server/shiny-server.conf
-RUN chmod +x /usr/bin/shiny-server
-
-# setup tmtmosaic environment
-ENV APP_DIR="/srv/shiny-server/tmtmosaic"
-ENV PATH="$PATH:$APP_DIR/scripts"
+ENV APP_DIR="/srv/shiny-proteomics"
+ENV DATA_DIR="$APP_DIR/data"
+ENV PORT=3838
 
 WORKDIR $APP_DIR
+ENV PYTHONPATH="$APP_DIR/src:$PYTHONPATH"
 
-# prepare filesystem and borrow s6 service's run script
-RUN mv /etc/services.d/shiny-server scripts \
-    && mkdir --mode=700 data \
-    && chown shiny:shiny data
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends build-essential libssl-dev libsqlite3-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# copy webapp src
-COPY src/ .
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN chmod -R +x scripts
+COPY src ./src
+COPY README.md ./README.md
+COPY conf.tmp ./conf.tmp
 
-CMD ["/init", "entrypoint.sh"]
+RUN mkdir -p $DATA_DIR && \
+    chown -R root:root $APP_DIR
+
+EXPOSE 3838
+
+CMD ["uvicorn", "shiny_proteomics_python.app:app", "--host", "0.0.0.0", "--port", "3838"]

@@ -3,10 +3,7 @@ services:
     volumes:
       - type: bind
         source: ./src
-        target: /srv/shiny-server/tmtmosaic
-      - type: bind
-        source: ./tests
-        target: /srv/shiny-server/tmtmosaic/tests
+        target: /srv/shiny-proteomics/src
     entrypoint: /bin/bash
     container_name: shiny-dev
     stdin_open: true 

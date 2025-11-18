@@ -1,1 +1,0 @@
-## Isoparser is directly based on the TMT-Mosaic application developed by J Gygi in the Gygi lab at HMS
