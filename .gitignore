@@ -41,5 +41,7 @@ vignettes/*.pdf
 # Local data
 data/*
 
+local-data/
+
 # Dev overrides
 docker-compose.override.yml

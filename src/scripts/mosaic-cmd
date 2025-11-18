@@ -1,8 +1,0 @@
-#!/bin/bash
-
-cd $APP_DIR
-
-SCRIPT=scripts/$1
-shift
-
-exec s6-setuidgid shiny Rscript --vanilla $SCRIPT $*
