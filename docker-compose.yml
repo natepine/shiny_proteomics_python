@@ -14,7 +14,7 @@ services:
         # PORT=<your-host-port>
 
     volumes:
-      - ./local-data:/srv/shiny-proteomics/data/
+      - db_data:/srv/shiny-proteomics/data/
 
     restart: always
 

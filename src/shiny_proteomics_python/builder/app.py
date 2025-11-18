@@ -320,18 +320,10 @@ def _builder_server(config: AppConfig):
                 state.client = client
                 session.notification_show("Login successful", type="message")
 
-        def _load_from_server(qid: int, is_site_quant: bool, refresh: bool) -> pd.DataFrame:
+        def _load_from_server(qid: int, is_site_quant: bool) -> pd.DataFrame:
             req(state.client is not None)
-            server_name = state.client.server.host
-            cache_key = mosaic_cache_key(qid, is_site_quant, "raw", server_name)
-            if not refresh:
-                cached = cache.read(cache_key)
-                if isinstance(cached, pd.DataFrame):
-                    return cached
             raw = fetch_proteins(state.client, qid, is_site_quant)
-            df = pd.DataFrame(raw)
-            cache.write(df, cache_key, overwrite=True)
-            return df
+            return pd.DataFrame(raw)
 
         def _load_from_upload(kind: str, path: Path) -> pd.DataFrame:
             return csv_loader.load_table(path, kind)
@@ -350,10 +342,9 @@ def _builder_server(config: AppConfig):
         def _load_data():
             data_type = input.data_type()
             is_site = bool(input.is_site_quant())
-            refresh = bool(input.refresh_cache())
             if data_type == "server":
                 qid = req(input.qid())
-                df = _load_from_server(int(qid), is_site, refresh)
+                df = _load_from_server(int(qid), is_site)
                 server_name = state.client.server.host if state.client else ""
             else:
                 uploaded = req(input.quant_file())
