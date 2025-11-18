@@ -1,4 +1,0 @@
-#!/bin/bash
-
-Rscript --vanilla $APP_DIR/tests/healthcheck.r $*
-

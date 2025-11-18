@@ -14,7 +14,7 @@ services:
         # PORT=<your-host-port>
 
     volumes:
-      - db_data:/srv/shiny-server/tmtmosaic/data/
+      - db_data:/srv/shiny-proteomics/data/
 
     restart: always
 
