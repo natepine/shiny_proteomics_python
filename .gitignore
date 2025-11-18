@@ -43,3 +43,7 @@ data/*
 
 # Dev overrides
 docker-compose.override.yml
+
+# Python artifacts
+__pycache__/
+*.pyc

@@ -54,10 +54,33 @@ PORT=3838
 PORT defines which host port docker serves the app on.
 
 ## Using an App
-To get started with the apps, substitute the values you supplied in `.env`. Navigate to:
+To get started with the classic R-based apps, substitute the values you supplied in `.env`. Navigate to:
 ```
 http://localhost:${PORT}/tmtmosaic/<IsoBuilder|IsoParser>
 ```
+
+## Python Shiny rewrite of IsoBuilder
+This repository also contains a ground-up rewrite of IsoBuilder implemented with [Python Shiny](https://shiny.posit.co/py/).
+The new app mirrors the multi-step workflow of the R version (data source validation, sample naming, color selection,
+annotation notes, and a final review) while remaining fully self-contained—no MassPike backend is required for basic
+exploration. Use it when you want to develop or test IsoBuilder logic without launching a Shiny Server container.
+
+To run the Python version locally:
+
+1. Create a virtual environment (recommended) and install the dependencies.
+   ```
+   python -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
+2. Start the application with `shiny run` (the `--reload` flag is useful during development).
+   ```
+   shiny run --reload src/IsoBuilderPy/app.py
+   ```
+3. Open the printed URL (usually http://127.0.0.1:8000) to interact with the Python Shiny IsoBuilder experience. The
+   landing page lets you work with the bundled example dataset or import your own CSV/TSV protein quantification file,
+   edit metadata directly, customize color palettes, add notes, and review the final configuration via interactive Plotly
+   charts—all implemented in Python.
 
 # Administrative scripts
 ShinyProteomics includes several command line scripts to configure and maintain the app. To execute a script run:
