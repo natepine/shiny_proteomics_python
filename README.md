@@ -73,14 +73,20 @@ The application reads `/srv/shiny-proteomics/data/conf.yml` inside the container
 
 The `.env` file can override runtime defaults. Example:
 
-```
-PORT=5000
-```
+### Prerequisites
 
 ### Logs
 
 ```
-docker logs -f tmtmosaic-app-1
+docker logs tmtmosaic-app-1
+```
+
+### Environment variables
+
+The `.env` file can override runtime defaults:
+
+```
+PORT=5000
 ```
 
 ### Development workflow
