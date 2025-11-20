@@ -17,7 +17,7 @@ This repository contains the Python Shiny implementation of the TMT Mosaic edito
    ```
    ./scripts/bootstrap_data_dir.sh
    ```
-   This creates `local-data/` next to the compose file and copies [`conf.tmp`](conf.tmp) to `local-data/conf.yml`. If you skip this step the app will copy the template on first launch and log a warning, but you still need to edit the generated file before production use.
+   This creates `local-data/` next to the compose file and copies [`conf.tmp`](conf.tmp) to `local-data/conf.yml`.
 4. **Edit `local-data/conf.yml`** in any text editor:
    * list the MassPike servers you can access
    * paste the REST API keys the builder should use
@@ -73,15 +73,20 @@ The application reads `/srv/shiny-proteomics/data/conf.yml` inside the container
 
 The `.env` file can override runtime defaults. Example:
 
-```
-PORT=5000
-CONFIG_PATH=/srv/shiny-proteomics/data/custom-conf.yml
-```
+### Prerequisites
 
 ### Logs
 
 ```
-docker logs -f tmtmosaic-app-1
+docker logs tmtmosaic-app-1
+```
+
+### Environment variables
+
+The `.env` file can override runtime defaults:
+
+```
+PORT=5000
 ```
 
 ### Development workflow
