@@ -1,3 +1,0 @@
-"name","desc","type","from","to"
-"multiplex_protein","loadDataset handles multiple plexes","load","gfyRaw/multiplex_protein","mosaic/multiplex_protein"
-"multiplex_ptm","loadDataset handles multiple site quant plexes","load","gfyRaw/multiplex_ptm","mosaic/multiplex_ptm"
